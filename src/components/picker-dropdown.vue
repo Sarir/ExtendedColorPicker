@@ -10,7 +10,7 @@
       <alpha-slider v-if="showAlpha" ref="alpha" :color="color"></alpha-slider>
       <predefine v-if="predefine" :color="color" :colors="predefine"></predefine>
       <div class="el-color-dropdown__btns">
-        <span class="el-color-dropdown__value">
+        <span v-if="!noButtons" class="el-color-dropdown__value">
           <el-input
             v-model="customInput"
             @keyup.native.enter="handleConfirm"
@@ -18,7 +18,13 @@
             size="mini">
           </el-input>
         </span>
+        <span
+          v-if="noButtons"
+          class="el-color-dropdown__value">
+          {{ currentColor }}
+        </span>
         <el-button
+          v-if="!noButtons"
           size="mini"
           type="text"
           class="el-color-dropdown__link-btn"
@@ -26,12 +32,19 @@
           Clear
         </el-button>
         <el-button
+          v-if="!noButtons"
           plain
           size="mini"
           class="el-color-dropdown__btn"
           @click="confirmValue">
           OK
         </el-button>
+        <button
+          v-if="noButtons"
+          class="el-color-dropdown__btn"
+          @click="confirmValue">
+          OK
+        </button>
       </div>
       <selectors v-if="selectors" :color="color" :selectors="selectors"/>
     </div>
@@ -69,6 +82,7 @@
         required: true
       },
       showAlpha: Boolean,
+      noButtons: Boolean,
       predefine: Array,
       selectors: Array
     },

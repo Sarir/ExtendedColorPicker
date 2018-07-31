@@ -24,6 +24,7 @@
        @clear="clearValue"
        :color="color"
        :show-alpha="showAlpha"
+       :no-buttons="noButtons"
        :predefine="predefine"
        :selectors="selectors">
     </picker-dropdown>
@@ -41,6 +42,7 @@
     props: {
       value: String,
       showAlpha: Boolean,
+      noButtons: Boolean,
       colorFormat: String,
       disabled: Boolean,
       size: String,
