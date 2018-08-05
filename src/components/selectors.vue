@@ -5,7 +5,8 @@
       placeholder="Select"
       size="mini"
       class="el-color-selector__select"
-      @change="changeColorPack">
+      @change="changeColorPack"
+      @visible-change="$emit('change-select', $event)">
       <el-option
         v-for="(select, index) in selectors"
         :key="index"

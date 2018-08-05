@@ -1,5 +1,6 @@
 <template>
   <div
+    v-clickoutside="hideIfNotSelect"
     :class="[
       'el-color-picker',
       colorDisabled ? 'is-disabled' : '',
@@ -26,7 +27,8 @@
        :show-alpha="showAlpha"
        :no-buttons="noButtons"
        :predefine="predefine"
-       :selectors="selectors">
+       :selectors="selectors"
+       @change-select="changeSelect">
     </picker-dropdown>
   </div>
 </template>
@@ -59,6 +61,8 @@
         default: ''
       }
     },
+
+    directives: { Clickoutside },
 
     computed: {
       displayedColor() {
@@ -132,6 +136,11 @@
         this.showPicker = false;
         this.resetColor();
       },
+      hideIfNotSelect() {
+        if (!this.selectState) {
+          this.hide();
+        }
+      },
       resetColor() {
         this.$nextTick(_ => {
           if (this.value) {
@@ -150,7 +159,10 @@
         return showAlpha
           ? `rgba(${ r }, ${ g }, ${ b }, ${ color.get('alpha') / 100 })`
           : `rgb(${ r }, ${ g }, ${ b })`;
-      }
+      },
+      changeSelect(value) {
+        this.selectState = value;
+      },
     },
 
     mounted() {
@@ -169,7 +181,8 @@
       return {
         color,
         showPicker: false,
-        showPanelColor: false
+        showPanelColor: false,
+        selectState: false,
       };
     },
 

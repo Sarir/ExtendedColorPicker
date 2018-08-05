@@ -43,10 +43,14 @@
           v-if="noButtons"
           class="el-color-dropdown__btn"
           @click="confirmValue">
-          OK
+          +
         </button>
       </div>
-      <selectors v-if="selectors" :color="color" :selectors="selectors"/>
+      <selectors
+        v-if="selectors"
+        :color="color"
+        :selectors="selectors"
+        @change-select="$emit('change-select', $event)"/>
     </div>
   </transition>
 </template>
@@ -64,7 +68,6 @@
 
   export default {
     name: 'el-color-picker-dropdown',
-
     mixins: [Popper, Locale],
 
     components: {
@@ -96,8 +99,7 @@
 
     computed: {
       currentColor() {
-        const parent = this.$parent;
-        return !parent.value && !parent.showPanelColor ? '' : parent.color.value;
+        return this.color.value;
       }
     },
 
